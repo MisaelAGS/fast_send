@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Fast Send</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #00b89f;
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        form {
+            background: #fff;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            text-align: center;
+        }
+        label {
+            display: block;
+            margin: 15px 0 5px;
+            font-weight: bold;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #ffd700;
+            color: #333;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+        }
+        button:hover {
+            background-color: #ffcc00;
+        }
+        #error-message {
+            color: #ff0000;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+        .register-link {
+            display: block;
+            margin-top: 10px;
+            color: #333;
+            text-decoration: none;
+        }
+        .register-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <form id="login-form">
+        <h1>Fast Send Login</h1>
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required>
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required>
+        <button type="submit">Entrar</button>
+        <div id="error-message"></div>
+        
+        <!-- Link para página de cadastro -->
+        <a href="/register" class="register-link">Não tem uma conta? Cadastre-se</a>
+    </form>
+
+    <script>
+        document.getElementById('login-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const formData = new FormData(this);
+            
+            fetch('http://127.0.0.1:5000/login', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    window.location.href = "/index";  // Redireciona para a página inicial
+                } else {
+                    document.getElementById('error-message').textContent = data.message;
+                }
+            })
+            .catch(error => {
+                document.getElementById('error-message').textContent = 'Erro ao fazer login: ' + error;
+            });
+        });
+    </script>
+</body>
+</html>
