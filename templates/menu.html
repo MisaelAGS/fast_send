@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Principal</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1>Bem-vindo ao Menu Principal</h1>
+        <p>Escolha uma das opções abaixo:</p>
+
+        <ul class="list-group">
+            <li class="list-group-item">
+                <a href="{{ url_for('render_remetentes_page') }}">Cadastrar Remetentes</a>
+            </li>
+            <li class="list-group-item">
+                <a href="{{ url_for('listar_remetentes') }}">Listar Remetentes</a>
+            </li>
+            <li class="list-group-item">
+                <!-- Link para Cadastrar Destinatário -->
+                <a href="{{ url_for('render_cadastrar_destinatario_page') }}">Cadastrar Destinatário</a>
+            </li>
+            <li class="list-group-item">
+                <!-- Link para Listar Destinatário -->
+                <a href="{{ url_for('listar_destinatarios') }}">Listar Destinatários</a>
+            </li>
+            <li class="list-group-item">
+                <!-- Link para Enviar E-mail -->
+                <a href="{{ url_for('render_index_page') }}">Enviar E-mail</a>
+            </li>
+        </ul>
+
+        <form action="{{ url_for('logout') }}" method="POST" class="mt-4">
+            <button type="submit" class="btn btn-danger">Sair</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

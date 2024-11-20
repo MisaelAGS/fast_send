@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <base href="." />
+    <title>Cadastro - Fast Send</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary: rgb(245, 108, 33);
+            --primary-dark: rgb(245, 108, 33);
+            --background: #f9fafb;
+            --text: #1f2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: var(--background);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .main {
+            zoom: 0.7;
+        }
+
+        .corner-animation {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            z-index: -1;
+        }
+
+        .corner-top-left {
+            height: 900px;
+            width: 900px;
+            top: 0;
+            left: 0;
+        }
+
+        .corner-top-right {
+            height: 900px;
+            width: 900px;
+            top: 0;
+            right: 0;
+        }
+
+        .animation-form {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* .corner-bottom-left {
+            height: 1000px;
+            width: 1000px;
+            bottom: 0;
+            left: 0;
+        }
+
+        .corner-bottom-right {
+            height: 1000px;
+            width: 1000px;
+            bottom: 0;
+            right: 0;
+        } */
+
+        .main-content {
+            width: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 400px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-container h1 {
+            color: var(--text);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: left;
+        }
+
+        form input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+            margin-bottom: 1rem;
+        }
+
+        form button {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: var(--text);
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            color: white;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <main class="main">
+        <div class="corner-animation corner-top-left">
+            <dotlottie-player src="https://lottie.host/0f0e4ce0-6edc-4318-a77c-0eed2d72d71f/jxqGJU7Odc.lottie"
+                background="transparent" speed="1" loop autoplay>
+            </dotlottie-player>
+        </div>
+        <div class="corner-animation corner-top-right">
+            <dotlottie-player src="https://lottie.host/8ab01860-144c-44e4-82a5-d7a861d12da7/sy7KZeI5y9.lottie"
+                background="transparent" speed="1" loop autoplay>
+            </dotlottie-player>
+        </div>
+        <!-- <div class="corner-animation corner-bottom-left">
+                <dotlottie-player src="https://lottie.host/0f0e4ce0-6edc-4318-a77c-0eed2d72d71f/jxqGJU7Odc.lottie"
+                    background="transparent" speed="1" loop autoplay>
+                </dotlottie-player>
+            </div>
+            <div class="corner-animation corner-bottom-right">
+                <dotlottie-player src="https://lottie.host/ed92ba40-13d0-419a-b9f0-3bcd62d81d5d/lfRUKZbihW.lottie"
+                    background="transparent" speed="1" loop autoplay>
+                </dotlottie-player>
+            </div> -->
+
+        <main class="main-content">
+            <div class="form-container">
+                <form id="register-form">
+                    <div class="animation-form">
+                        <dotlottie-player
+                            src="https://lottie.host/22ececaf-eab5-4eea-ba23-688092b2af17/eTvFKX5RXI.lottie"
+                            background="transparent" speed="1" style="width: 200px; height: 200px" loop autoplay>
+                        </dotlottie-player>
+                    </div>
+                    <h1>Cadastro Fast Send</h1>
+                    <div class="input-group">
+                        <label for="name">Nome:</label>
+                        <input type="text" id="name" name="username" required placeholder="Digite seu nome">
+                    </div>
+                    <div class="input-group">
+                        <label for="email">E-mail:</label>
+                        <input type="email" id="email" name="email" required placeholder="seuemail@exemplo.com">
+                    </div>
+                    <div class="input-group">
+                        <label for="password">Criar Senha:</label>
+                        <input type="password" id="password" name="password" required placeholder="Digite sua senha">
+                    </div>
+                    <div class="input-group">
+                        <label for="confirm-password">Confirmar Senha:</label>
+                        <input type="password" id="confirm-password" name="confirm-password" required placeholder="Confirme sua senha">
+                    </div>
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div>
+        </main>
+    </main>
+
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module"></script>
+</body>
+
+</html>

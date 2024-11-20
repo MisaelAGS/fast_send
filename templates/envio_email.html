@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Envio de E-mail</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fa;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        label {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 8px;
+            display: block;
+        }
+        select, input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        textarea {
+            resize: vertical;
+        }
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .error {
+            background-color: #f44336;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .success {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Envio de E-mail</h1>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <form action="{{ url_for('enviar_email') }}" method="POST">
+            <div class="form-group">
+                <label for="remetente">Selecione o Remetente:</label>
+                <select name="remetente" id="remetente" required>
+                    <option value="" disabled selected>Escolha um remetente</option>
+                    {% for remetente in remetentes %}
+                        <option value="{{ remetente[0] }}">{{ remetente[1] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="destinatarios">Selecione o Destinatário:</label>
+                <select name="destinatarios" id="destinatarios" required>
+                    {% for destinatario in destinatarios %}
+                        <option value="{{ destinatario[0] }}">{{ destinatario[1] }} - {{ destinatario[2] }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="assunto">Assunto:</label>
+                <input type="text" name="assunto" id="assunto" required>
+            </div>
+
+            <div class="form-group">
+                <label for="corpo_email">Corpo do E-mail:</label>
+                <textarea name="corpo_email" id="corpo_email" rows="10" required></textarea>
+            </div>
+
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+</body>
+</html>

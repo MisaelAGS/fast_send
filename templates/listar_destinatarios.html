@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Destinatários</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #00b89f;
+            color: #fff;
+        }
+        .container {
+            width: 80%;
+            max-width: 800px;
+            background: #fff;
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #00b89f;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        .alert-container {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .alert {
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+        }
+
+        .alert.success {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .alert.error {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
+
+        .action-buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .action-buttons a {
+            padding: 10px 15px;
+            background-color: #ffd700;
+            color: #333;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+
+        .action-buttons a:hover {
+            background-color: #ffcc00;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Destinatários</h1>
+
+        <!-- Exibindo mensagens de sucesso ou erro -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert-container">
+                    {% for category, message in messages %}
+                        <div class="alert {{ category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>E-mail</th>
+                    <th>Nome Empresa</th>
+                    <th>Telefone</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for destinatario in remetentes %}
+                    <tr>
+                        <td>{{ destinatario[0] }}</td>
+                        <td>{{ destinatario[1] }}</td>
+                        <td>{{ destinatario[2] }}</td>
+                        <td>{{ destinatario[3] }}</td>
+                        <td>
+                            <form action="{{ url_for('deletar_destinatario', id=destinatario[0]) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="delete-button">Excluir</button>
+                            </form>                            
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">Não há destinatários cadastrados.</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <div class="action-buttons">
+            <a href="{{ url_for('render_remetentes_page') }}">Voltar</a>
+        </div>
+    </div>
+</body>
+</html>

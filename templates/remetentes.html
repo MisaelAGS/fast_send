@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Fast Send</title>
+    <title>Cadastro de Remetentes</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #00b89f;
-            color: #fff;
+            margin: 0;
+            padding: 0;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
+            background-color: #00b89f;
+            color: #fff;
         }
         form {
             background: #fff;
@@ -23,6 +24,10 @@
             box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
             width: 300px;
             text-align: center;
+        }
+        h1 {
+            margin-bottom: 20px;
+            color: #00b89f;
         }
         label {
             display: block;
@@ -50,56 +55,50 @@
         button:hover {
             background-color: #ffcc00;
         }
-        #error-message {
-            color: #ff0000;
+        #status-message {
+            margin-top: 15px;
             font-weight: bold;
-            margin-top: 10px;
-        }
-        .register-link {
-            display: block;
-            margin-top: 10px;
-            color: #333;
-            text-decoration: none;
-        }
-        .register-link:hover {
-            text-decoration: underline;
+            color: #ff0000;
         }
     </style>
 </head>
 <body>
-    <form id="login-form">
-        <h1>Fast Send Login</h1>
+    <form id="remetente-form">
+        <h1>Cadastro de Remetentes</h1>
         <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" required>
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Entrar</button>
-        <div id="error-message"></div>
-        
-        <!-- Link para página de cadastro -->
-        <a href="/register" class="register-link">Não tem uma conta? Cadastre-se</a>
+        <input type="email" id="email" name="email" placeholder="Digite o e-mail" required>
+
+        <label for="senha_envio">Senha de Envio:</label>
+        <input type="password" id="senha_envio" name="senha_envio" placeholder="Digite a senha" required>
+
+        <button type="submit">Cadastrar</button>
+        <div id="status-message"></div>
     </form>
 
     <script>
-        document.getElementById('login-form').addEventListener('submit', function(event) {
+        document.getElementById('remetente-form').addEventListener('submit', function (event) {
             event.preventDefault();
 
             const formData = new FormData(this);
-            
-            fetch('http://127.0.0.1:5000/login', {
+
+            fetch('http://127.0.0.1:5000/remetentes', {
                 method: 'POST',
                 body: formData
             })
             .then(response => response.json())
             .then(data => {
+                const statusMessage = document.getElementById('status-message');
                 if (data.success) {
-                    window.location.href = "/menu";  // Redireciona para a página inicial
+                    statusMessage.style.color = 'green';
+                    statusMessage.textContent = data.message;
+                    this.reset(); // Limpa o formulário após sucesso
                 } else {
-                    document.getElementById('error-message').textContent = data.message;
+                    statusMessage.style.color = 'red';
+                    statusMessage.textContent = data.message;
                 }
             })
             .catch(error => {
-                document.getElementById('error-message').textContent = 'Erro ao fazer login: ' + error;
+                document.getElementById('status-message').textContent = 'Erro ao cadastrar remetente: ' + error;
             });
         });
     </script>
