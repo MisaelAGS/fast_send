@@ -1,107 +1,231 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Fast Send</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary: rgb(245, 108, 33);
+            --primary-dark: rgb(245, 108, 33);
+            --background: #f9fafb;
+            --text: #1f2937;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
         body {
-            font-family: Arial, sans-serif;
-            background-color: #00b89f;
-            color: #fff;
+            min-height: 100vh;
+            background: var(--background);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
+            background: linear-gradient(135deg, #f6f7ff 0%, #ffffff 100%);
+            overflow-y: auto; /* Adiciona scroll vertical se necessário */
+            overflow-x: hidden; /* Evita scroll horizontal */
         }
-        form {
-            background: #fff;
-            color: #333;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            width: 300px;
-            text-align: center;
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            zoom: 0.7;
         }
-        label {
-            display: block;
-            margin: 15px 0 5px;
-            font-weight: bold;
-        }
-        input[type="email"],
-        input[type="password"] {
+
+        .login-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
+            max-width: 400px;
+            position: relative;
+            overflow: hidden;
+            margin-top: 50px;
         }
-        button {
-            background-color: #ffd700;
-            color: #333;
+
+        .login-container::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(43, 33, 168, 0.1), transparent);
+            animation: shine 8s linear infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-50%) translateY(-50%) rotate(0deg);
+            }
+
+            100% {
+                transform: translateX(-50%) translateY(-50%) rotate(360deg);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .login-header h1 {
+            color: var(--text);
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .login-header p {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+            background: white;
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 0.75rem;
+            background: var(--primary);
+            color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
-            font-size: 1.1em;
+            transition: all 0.3s ease;
         }
-        button:hover {
-            background-color: #ffcc00;
+
+        .login-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
         }
+
+        .login-button:active {
+            transform: translateY(0);
+        }
+
         #error-message {
             color: #ff0000;
             font-weight: bold;
             margin-top: 10px;
+            text-align: center;
         }
-        .register-link {
-            display: block;
-            margin-top: 10px;
-            color: #333;
+
+        .signup-link {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .signup-link a {
+            color: var(--primary);
             text-decoration: none;
+            font-weight: 500;
         }
-        .register-link:hover {
-            text-decoration: underline;
+
+        .signup-link a:hover {
+            color: var(--primary-dark);
         }
     </style>
 </head>
+
 <body>
-    <form id="login-form">
-        <h1>Fast Send Login</h1>
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" required>
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required>
-        <button type="submit">Entrar</button>
-        <div id="error-message"></div>
-        
-        <!-- Link para página de cadastro -->
-        <a href="/register" class="register-link">Não tem uma conta? Cadastre-se</a>
-    </form>
+    <main class="main-content">
+        <dotlottie-player src="https://lottie.host/eb6d2ad7-729d-4cdb-93ea-16bae5184f6b/WhJLyWKL9D.lottie"
+            background="transparent" speed="2" style="width: 200px; height: 200px" loop autoplay>
+        </dotlottie-player>
+        <div class="login-container">
+            <div class="login-header">
+                <h1>Bem-vindo de volta</h1>
+                <p>Por favor, insira suas credenciais para acessar sua conta</p>
+            </div>
+
+            <form id="login-form">
+                <div class="input-group">
+                    <label for="email">E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Senha:</label>
+                    <input type="password" id="password" name="password" placeholder="Digite sua senha" required>
+                </div>
+
+                <button type="submit" class="login-button">Entrar</button>
+                <div id="error-message"></div>
+
+                <div class="signup-link">
+                    Não tem uma conta? <a href="/register">Cadastre-se</a>
+                </div>
+            </form>
+        </div>
+    </main>
 
     <script>
-        document.getElementById('login-form').addEventListener('submit', function(event) {
+        document.getElementById('login-form').addEventListener('submit', function (event) {
             event.preventDefault();
 
             const formData = new FormData(this);
-            
+
             fetch('http://127.0.0.1:5000/login', {
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = "/menu";  // Redireciona para a página inicial
-                } else {
-                    document.getElementById('error-message').textContent = data.message;
-                }
-            })
-            .catch(error => {
-                document.getElementById('error-message').textContent = 'Erro ao fazer login: ' + error;
-            });
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.href = "/menu"; // Redireciona para a página inicial
+                    } else {
+                        document.getElementById('error-message').textContent = data.message;
+                    }
+                })
+                .catch(error => {
+                    document.getElementById('error-message').textContent = 'Erro ao fazer login: ' + error;
+                });
         });
     </script>
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js"></script>
+
 </body>
+
 </html>

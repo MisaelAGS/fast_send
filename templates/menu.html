@@ -1,43 +1,235 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<html>
+
 <head>
+    <base href="https://example.com">
+    <title>Menu Principal - Fast Send</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu Principal</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Bem-vindo ao Menu Principal</h1>
-        <p>Escolha uma das opções abaixo:</p>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
 
-        <ul class="list-group">
-            <li class="list-group-item">
-                <a href="{{ url_for('render_remetentes_page') }}">Cadastrar Remetentes</a>
+        :root {
+            --primary: rgb(245, 108, 33);
+            --primary-dark: rgb(245, 108, 33);
+            --background: #f8fafc;
+            --text: #1e293b;
+            --error: #ef4444;
+            --success: #22c55e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--background);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #dbeafe 0%, #ffffff 100%);
+            padding: 1.5rem;
+        }
+
+        .menu-container {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-container:hover {
+            transform: translateY(-5px);
+        }
+
+        h1 {
+            color: var(--text);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        p {
+            color: var(--text);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .menu-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .menu-item {
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            animation: slideUp 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .menu-item:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .menu-item:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .menu-item:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .menu-item:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        .menu-item:nth-child(5) {
+            animation-delay: 0.5s;
+        }
+
+        .menu-link {
+            display: block;
+            padding: 1rem 1.5rem;
+            background: var(--background);
+            color: var(--text);
+            text-decoration: none;
+            border-radius: 0.75rem;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .menu-link:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateX(10px);
+        }
+
+        .logout-btn {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, rgb(245, 108, 33) 0%, rgb(245, 108, 33) 100%);
+            color: white;
+            border: none;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            animation: glow 2s infinite;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.1), 0 2px 4px -1px rgba(239, 68, 68, 0.06);
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes glow {
+            0% {
+                box-shadow: 0 0 5px rgba(242, 101, 34, 0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 20px rgba(242, 101, 34, 0.8);
+            }
+
+            100% {
+                box-shadow: 0 0 5px rgba(242, 101, 34, 0.5);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="menu-container">
+        <h1>Bem-vindo ao Fast Send</h1>
+        <p>Escolha uma das opções abaixo:</p>
+        <dotlottie-player src="https://lottie.host/7fdb00bc-95fa-489c-8866-1e8e38878384/ldDYoV6kxG.lottie"
+            background="transparent" speed="2" style="width: 200px; height: 200px" loop autoplay>
+        </dotlottie-player>
+
+        <ul class="menu-list">
+            <li class="menu-item">
+                <a href="{{ url_for('render_remetentes_page') }}" class="menu-link">
+                    📝 Cadastrar Remetentes
+                </a>
             </li>
-            <li class="list-group-item">
-                <a href="{{ url_for('listar_remetentes') }}">Listar Remetentes</a>
+            <li class="menu-item">
+                <a href="{{ url_for('listar_remetentes') }}" class="menu-link">
+                    📋 Listar Remetentes
+                </a>
             </li>
-            <li class="list-group-item">
-                <!-- Link para Cadastrar Destinatário -->
-                <a href="{{ url_for('render_cadastrar_destinatario_page') }}">Cadastrar Destinatário</a>
+            <li class="menu-item">
+                <a href="{{ url_for('render_cadastrar_destinatario_page') }}" class="menu-link">
+                    ✏️ Cadastrar Destinatário
+                </a>
             </li>
-            <li class="list-group-item">
-                <!-- Link para Listar Destinatário -->
-                <a href="{{ url_for('listar_destinatarios') }}">Listar Destinatários</a>
+            <li class="menu-item">
+                <a href="{{ url_for('listar_destinatarios') }}" class="menu-link">
+                    📚 Listar Destinatários
+                </a>
             </li>
-            <li class="list-group-item">
-                <!-- Link para Enviar E-mail -->
-                <a href="{{ url_for('render_index_page') }}">Enviar E-mail</a>
+            <li class="menu-item">
+                <a href="{{ url_for('render_index_page') }}" class="menu-link">
+                    ✉️ Enviar E-mail
+                </a>
             </li>
         </ul>
 
-        <form action="{{ url_for('logout') }}" method="POST" class="mt-4">
-            <button type="submit" class="btn btn-danger">Sair</button>
+        <form action="{{ url_for('logout') }}" method="POST">
+            <button type="submit" class="logout-btn">Sair</button>
         </form>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.querySelectorAll('.menu-link').forEach(link => {
+            link.addEventListener('click', function (e) {
+                this.style.transform = 'scale(0.95) translateX(10px)';
+                setTimeout(() => {
+                    this.style.transform = 'translateX(10px)';
+                }, 100);
+            });
+        });
+    </script>
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js"></script>
 </body>
+
 </html>

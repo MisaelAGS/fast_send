@@ -1,96 +1,189 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
+<html><head><base href="." />
+    <title>Lista de Destinatários - Fast Send</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Destinatários</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary: rgb(220, 97, 29);
+            --primary-dark: rgb(220, 97, 29);
+            --background: #f8fafc;
+            --text: #1e293b;
+            --error: #ef4444;
+            --success: #22c55e;
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #00b89f;
-            color: #fff;
+            background: linear-gradient(135deg, #e6fff9 0%, #ffffff 100%);
+            padding: 1.5rem;
         }
+
         .container {
-            width: 80%;
-            max-width: 800px;
-            background: #fff;
-            color: #333;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            width: 100%;
+            max-width: 1000px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            animation: formAppear 0.5s ease forwards;
         }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+
         h1 {
-            margin-bottom: 20px;
-            color: #00b89f;
+            color: var(--text);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
         table {
             width: 100%;
-            border-collapse: collapse;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-bottom: 2rem;
         }
+
         th, td {
-            padding: 10px;
+            padding: 1rem;
             text-align: left;
-            border-bottom: 1px solid #ddd;
         }
+
         th {
-            background-color: #f4f4f4;
+            background: var(--background);
+            color: var(--text);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
+
+        tr:not(:last-child) td {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        td {
+            color: var(--text);
+            font-size: 0.95rem;
+        }
+
         .alert-container {
-            margin-bottom: 20px;
-            text-align: center;
+            margin-bottom: 1.5rem;
         }
 
         .alert {
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            font-weight: bold;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            text-align: center;
+            margin-bottom: 1rem;
+            animation: slideUp 0.3s ease forwards;
         }
 
         .alert.success {
-            background-color: #28a745;
-            color: white;
+            background-color: rgba(34, 197, 94, 0.1);
+            color: var(--success);
         }
 
         .alert.error {
-            background-color: #dc3545;
-            color: white;
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--error);
         }
 
         .delete-button {
-            background-color: #dc3545;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, var(--error) 0%, #dc2626 100%);
             color: white;
             border: none;
-            padding: 6px 12px;
-            border-radius: 5px;
+            border-radius: 0.75rem;
+            font-size: 0.9rem;
+            font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
         }
 
         .delete-button:hover {
-            background-color: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(239, 68, 68, 0.1), 0 2px 4px -1px rgba(239, 68, 68, 0.06);
         }
 
         .action-buttons {
-            margin-top: 20px;
             text-align: center;
+            margin-top: 2rem;
         }
 
         .action-buttons a {
-            padding: 10px 15px;
-            background-color: #ffd700;
-            color: #333;
-            border-radius: 5px;
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
             text-decoration: none;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         .action-buttons a:hover {
-            background-color: #ffcc00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 184, 159, 0.1), 0 2px 4px -1px rgba(0, 184, 159, 0.06);
+        }
+
+        @keyframes formAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from { transform: translateY(10px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        tr:hover td {
+            background-color: var(--background);
+            transition: background-color 0.3s ease;
+        }
+
+        thead tr th:first-child {
+            border-top-left-radius: 0.75rem;
+        }
+
+        thead tr th:last-child {
+            border-top-right-radius: 0.75rem;
+        }
+
+        tbody tr:last-child td:first-child {
+            border-bottom-left-radius: 0.75rem;
+        }
+
+        tbody tr:last-child td:last-child {
+            border-bottom-right-radius: 0.75rem;
         }
     </style>
 </head>
@@ -98,7 +191,6 @@
     <div class="container">
         <h1>Lista de Destinatários</h1>
 
-        <!-- Exibindo mensagens de sucesso ou erro -->
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
                 <div class="alert-container">
@@ -131,7 +223,7 @@
                         <td>
                             <form action="{{ url_for('deletar_destinatario', id=destinatario[0]) }}" method="POST" style="display:inline;">
                                 <button type="submit" class="delete-button">Excluir</button>
-                            </form>                            
+                            </form>
                         </td>
                     </tr>
                 {% else %}
@@ -146,5 +238,4 @@
             <a href="{{ url_for('render_remetentes_page') }}">Voltar</a>
         </div>
     </div>
-</body>
-</html>
+</body></html>

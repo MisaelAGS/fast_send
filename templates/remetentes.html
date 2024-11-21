@@ -1,75 +1,155 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<html>
+
 <head>
+    <base href="." />
+    <title>Cadastro de Remetentes - Fast Send</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Remetentes</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+
+        :root {
+            --primary: rgb(245, 108, 33);
+            --primary-dark: rgb(245, 108, 33);
+            --background: #f8fafc;
+            --text: #1e293b;
+            --error: #ef4444;
+            --success: #22c55e;
+        }
+
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #00b89f;
-            color: #fff;
+            background: linear-gradient(135deg, #dbeafe 0%, #ffffff 100%);
+            padding: 1.5rem;
         }
+
         form {
-            background: #fff;
-            color: #333;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            width: 300px;
-            text-align: center;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1.5rem;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            width: 100%;
+            max-width: 500px;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            animation: formAppear 0.5s ease forwards;
         }
+
+        form:hover {
+            transform: translateY(-5px);
+        }
+
         h1 {
-            margin-bottom: 20px;
-            color: #00b89f;
+            color: var(--text);
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
+
         label {
             display: block;
-            margin: 15px 0 5px;
-            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            font-weight: 500;
+            font-size: 0.95rem;
         }
+
         input[type="email"],
         input[type="password"] {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
+            padding: 1rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--background);
+            color: var(--text);
         }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
         button {
-            background-color: #ffd700;
-            color: #333;
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
+            border-radius: 0.75rem;
+            font-size: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 1.1em;
+            transition: all 0.3s ease;
         }
+
         button:hover {
-            background-color: #ffcc00;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.1), 0 2px 4px -1px rgba(59, 130, 246, 0.06);
         }
+
         #status-message {
-            margin-top: 15px;
-            font-weight: bold;
-            color: #ff0000;
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 0.75rem;
+            font-weight: 500;
+            text-align: center;
+            animation: slideUp 0.3s ease forwards;
+        }
+
+        @keyframes formAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(10px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
         }
     </style>
 </head>
+
 <body>
     <form id="remetente-form">
         <h1>Cadastro de Remetentes</h1>
         <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" placeholder="Digite o e-mail" required>
+        <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
 
         <label for="senha_envio">Senha de Envio:</label>
-        <input type="password" id="senha_envio" name="senha_envio" placeholder="Digite a senha" required>
+        <input type="password" id="senha_envio" name="senha_envio" placeholder="Digite sua senha" required>
 
         <button type="submit">Cadastrar</button>
         <div id="status-message"></div>
@@ -85,22 +165,28 @@
                 method: 'POST',
                 body: formData
             })
-            .then(response => response.json())
-            .then(data => {
-                const statusMessage = document.getElementById('status-message');
-                if (data.success) {
-                    statusMessage.style.color = 'green';
-                    statusMessage.textContent = data.message;
-                    this.reset(); // Limpa o formulário após sucesso
-                } else {
-                    statusMessage.style.color = 'red';
-                    statusMessage.textContent = data.message;
-                }
-            })
-            .catch(error => {
-                document.getElementById('status-message').textContent = 'Erro ao cadastrar remetente: ' + error;
-            });
+                .then(response => response.json())
+                .then(data => {
+                    const statusMessage = document.getElementById('status-message');
+                    if (data.success) {
+                        statusMessage.style.backgroundColor = 'rgba(34, 197, 94, 0.1)';
+                        statusMessage.style.color = '#22c55e';
+                        statusMessage.textContent = data.message;
+                        this.reset();
+                    } else {
+                        statusMessage.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+                        statusMessage.style.color = '#ef4444';
+                        statusMessage.textContent = data.message;
+                    }
+                })
+                .catch(error => {
+                    const statusMessage = document.getElementById('status-message');
+                    statusMessage.style.backgroundColor = 'rgba(239, 68, 68, 0.1)';
+                    statusMessage.style.color = '#ef4444';
+                    statusMessage.textContent = 'Erro ao cadastrar remetente: ' + error;
+                });
         });
     </script>
 </body>
+
 </html>

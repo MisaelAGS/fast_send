@@ -1,56 +1,167 @@
-<!DOCTYPE html>
-<html lang="pt-br">
+<html>
+
 <head>
+    <base href="." />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fast Send</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 0;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap');
+
+        :root {
+            --primary: #ff7b00;
+            --primary-dark: #e56e00;
+            --primary-light: #f8f8f8;
+            /* Changed from pink to light gray */
+            --background: #ffffff;
+            /* Changed from pink tint to pure white */
+            --text: #1e293b;
+            --error: #ef4444;
+            --success: #22c55e;
+        }
+
+        * {
             margin: 0;
-            background-color: #00b89f;
-            color: #fff;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            /* Garante que os elementos fiquem alinhados de cima para baixo */
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
+            background: linear-gradient(135deg, #ffffff 0%, #ffffff 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        body::before,
+        body::after {
+            content: '';
+            position: absolute;
+            width: 40vw;
+            height: 40vw;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 123, 0, 0.05) 0%, rgba(255, 255, 255, 0) 70%);
+            /* Reduced opacity */
+            z-index: -1;
+        }
+
+        body::before {
+            top: -20vw;
+            left: -20vw;
+        }
+
+        body::after {
+            bottom: -20vw;
+            right: -20vw;
         }
 
         h1 {
+            font-family: 'Poppins', sans-serif;
             text-align: center;
-            color: #ffd700;
-            font-size: 2.5em;
-            margin: 20px 0;
+            font-size: 3.5em;
+            margin: 2rem 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             position: relative;
+            animation: titleFloat 3s ease-in-out infinite;
+            text-shadow: 0px 4px 12px rgba(255, 123, 0, 0.2);
+            margin-bottom: 1rem;
+        }
+
+        @keyframes titleFloat {
+
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-10px);
+            }
         }
 
         h1::before,
         h1::after {
             content: '⚡';
-            font-size: 2.5em;
+            font-size: 1.2em;
             position: absolute;
-            top: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            animation: lightning 2s infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 123, 0, 0.4));
         }
 
         h1::before {
-            left: -50px;
+            left: -70px;
+            animation-delay: 0.5s;
         }
 
         h1::after {
-            right: -50px;
+            right: -70px;
         }
 
+        @keyframes lightning {
+
+            0%,
+            100% {
+                opacity: 1;
+                transform: translateY(-50%) scale(1);
+            }
+
+            50% {
+                opacity: 0.5;
+                transform: translateY(-50%) scale(0.9);
+            }
+        }
+
+
         form {
-            max-width: 700px;
+            max-width: 900px;
+            width: 100%;
             margin: 0 auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            color: #333;
+            padding: 3rem;
+            background: white;
+            border-radius: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(255, 123, 0, 0.15);
+            position: relative;
+            overflow: hidden;
+        }
+
+        form:hover {
+            transform: translateY(-5px);
+        }
+
+        form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 2rem 2rem 0 0;
         }
 
         label {
             display: block;
-            margin: 15px 0 5px;
-            font-weight: bold;
+            margin: 1.5rem 0 0.5rem;
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        label:hover {
+            color: var(--primary);
         }
 
         input[type="text"],
@@ -59,74 +170,174 @@
         input[type="file"],
         select {
             width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
+            padding: 1rem 1.25rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 1rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: #ffffff;
+            /* Changed from var(--background) to pure white */
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255, 123, 0, 0.1);
+            transform: scale(1.01);
         }
 
         button {
-            background-color: #ffd700;
-            color: #333;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
             border: none;
-            padding: 12px 20px;
-            border-radius: 5px;
+            border-radius: 1rem;
+            font-weight: 600;
             cursor: pointer;
-            font-size: 1.1em;
-            margin-right: 10px;
+            transition: all 0.3s ease;
+            margin: 1.5rem 0.5rem;
+            font-size: 1.1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
         }
 
         button:hover {
-            background-color: #ffcc00;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px -6px rgba(255, 123, 0, 0.4);
+        }
+
+        button:hover::before {
+            left: 100%;
         }
 
         #status-message {
             text-align: center;
-            font-weight: bold;
-            margin-top: 20px;
-            color: #000;
+            padding: 1.25rem;
+            margin-top: 1.5rem;
+            border-radius: 1rem;
+            font-weight: 500;
+            background: #f8f8f8;
+            /* Changed from var(--primary-light) to light gray */
+            color: var(--primary-dark);
+            animation: messageAppear 0.3s ease forwards;
         }
 
-        .email-mode {
-            margin-bottom: 20px;
+        @keyframes messageAppear {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .ql-container {
-            border: 1px solid #ddd;
-            border-radius: 5px;
+            border-radius: 1rem;
             overflow: hidden;
+            border: 2px solid #e2e8f0 !important;
+            transition: all 0.3s ease;
+        }
+
+        .ql-container:focus-within {
+            border-color: var(--primary) !important;
+            box-shadow: 0 0 0 4px rgba(255, 123, 0, 0.1);
+        }
+
+        .ql-toolbar {
+            border: none !important;
+            border-bottom: 2px solid #e2e8f0 !important;
+            background: #ffffff !important;
+            /* Changed from var(--background) to pure white */
+            padding: 1rem !important;
+        }
+
+        #csv-preview {
+            margin: 1.5rem 0;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            border: 2px solid #e2e8f0;
+            overflow-x: auto;
+            background: #ffffff;
+            /* Changed from var(--background) to pure white */
+            transition: all 0.3s ease;
+        }
+
+        #csv-preview:hover {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(255, 123, 0, 0.1);
         }
 
         table {
             width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        table,
-        th,
-        td {
-            border: 1px solid #ddd;
+            border-collapse: separate;
+            border-spacing: 0;
         }
 
         th,
         td {
-            padding: 10px;
-            text-align: left;
+            padding: 1rem 1.25rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
         }
 
         th {
-            background-color: #f4f4f4;
-            color: #333;
+            background: #f8f8f8;
+            /* Changed from var(--primary-light) to light gray */
+            color: var(--primary-dark);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+            letter-spacing: 0.05em;
         }
 
-        #csv-preview {
-            overflow-x: auto;
-            max-width: 100%;
-            border: 1px solid #ddd;
-            padding: 10px;
-            border-radius: 5px;
+        tr:hover td {
+            background: #f8f8f8;
+            /* Changed from var(--background) to light gray */
+            transform: scale(1.01);
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 1rem;
+            }
+
+            form {
+                padding: 2rem;
+            }
+
+            h1 {
+                font-size: 2.5em;
+            }
+
+            button {
+                width: 100%;
+                margin: 1rem 0;
+            }
+
+            .animation-class {
+                margin-bottom: 2rem;
+                /* Espaçamento entre a animação e o formulário */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                /* Garante que o contêiner ocupe toda a largura */
+            }
         }
     </style>
 
@@ -134,21 +345,24 @@
 </head>
 
 <body>
-    <h1>⚡ Vinicius Send ⚡</h1>
+    <h1>⚡ Fast Send ⚡</h1>
+    <div class="animation-class">
+        <dotlottie-player src="https://lottie.host/fb8e0dda-07e4-4717-961a-a0c81ffa5560/RJevxHSagP.lottie"
+            background="transparent" speed="2" style="width: 200px; height: 200px;" loop autoplay>
+        </dotlottie-player>
+    </div>
     <form id="email-form">
         <div id="bulk-mode" class="email-mode">
-            <!-- Substituindo o campo de e-mail do remetente por um select -->
             <label for="email-sender-bulk">Selecione o Remetente:</label>
             <select id="email-sender-bulk" name="email-sender-bulk" required>
-                <!-- A lista de remetentes será preenchida dinamicamente pelo Flask -->
                 {% for remetente in remetentes %}
-                    <option value="{{ remetente[0] }}">{{ remetente[0] }}</option>
+                <option value="{{ remetente[0] }}">{{ remetente[0] }}</option>
                 {% endfor %}
             </select>
 
             <label for="email-password-bulk">Senha de Envio:</label>
             <input type="password" id="email-password-bulk" name="email-password-bulk" required>
-            
+
             <label for="csv-file">Escolha um arquivo CSV:</label>
             <input type="file" id="csv-file" name="csv-file" accept=".csv" required>
             <div id="csv-preview"></div>
@@ -249,6 +463,7 @@
             quillBulk.root.innerHTML = '';
         });
     </script>
+    <script src="https://unpkg.com/@dotlottie/player-component@latest/dist/dotlottie-player.js"></script>
 </body>
 
 </html>
